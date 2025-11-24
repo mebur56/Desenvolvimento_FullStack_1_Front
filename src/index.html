@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+
+</head>
+
+<body>
+    <main>
+        <h1>Agenda</h1>
+    </main>
+    <div>
+        <input id="titleInput" type="text" placeholder="Titulo">
+        <input id="dateInput" type="text" placeholder="DD/MM/AAAA HH:mm" maxlength="16" pattern="\d{2}/\d{2}/\d{4}">
+        <input id="descriptionInput" type="text" placeholder="Descrição">
+        <button onclick="addSchedule()">Adicionar</button>
+    </div>
+    <div>
+        <table id="tabela_agenda">
+            <tr>
+                <th>Titulo</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </table>
+    </div>
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" onclick="closeModal()" class="close">&times;</span>
+            <h2>Editar Agendamento</h2>
+            <input type="text" id="editTitle" placeholder="Título"><br><br>
+            <input type="text" id="editDate" placeholder="DD/MM/AAAA HH:mm"><br><br>
+            <textarea id="editDescription" placeholder="Descrição"></textarea><br><br>
+            <button id="saveEditBtn" onClick="editSchedule()">Salvar</button>
+        </div>
+    </div>
+
+</body>
+<script src="./javascript/requests.js"></script>
+<script src="./javascript/main.js"></script>
+
+</html>
