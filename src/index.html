@@ -11,37 +11,45 @@
 
 <body>
     <main>
-        <h1>Agenda</h1>
-    </main>
-    <div>
-        <input id="titleInput" type="text" placeholder="Titulo">
-        <input id="dateInput" type="text" placeholder="DD/MM/AAAA HH:mm" maxlength="16" pattern="\d{2}/\d{2}/\d{4}">
-        <input id="descriptionInput" type="text" placeholder="Descrição">
-        <button onclick="addSchedule()">Adicionar</button>
-    </div>
-    <div>
-        <table id="tabela_agenda">
-            <tr>
-                <th>Titulo</th>
-                <th>Data</th>
-                <th>Descrição</th>
-                <th>Ações</th>
-            </tr>
-        </table>
-    </div>
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal" onclick="closeModal()" class="close">&times;</span>
-            <h2>Editar Agendamento</h2>
-            <input type="text" id="editTitle" placeholder="Título"><br><br>
-            <input type="text" id="editDate" placeholder="DD/MM/AAAA HH:mm"><br><br>
-            <textarea id="editDescription" placeholder="Descrição"></textarea><br><br>
-            <button id="saveEditBtn" onClick="editSchedule()">Salvar</button>
+        <div class="main">
+            <h1 class="title">Agenda</h1>
+            <div class="form">
+                <input class="input" id="titleInput" type="text" placeholder="Título">
+                <input class="input" id="dateInput" type="text" placeholder="DD/MM/AAAA HH:mm" maxlength="16"
+                    pattern="\d{2}/\d{2}/\d{4}">
+                <input class="input" id="descriptionInput" type="text"
+                    placeholder="Descrição">
+                <button class="btn-add" onclick="addSchedule()">
+                    Adicionar<img class="add-icon" src="./svg/add-icon.svg" alt="Adicionar" />
+                </button>
+            </div>
+            <div>
+                <table class="table" id="tabela_agenda">
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Data</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </table>
+            </div>
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <span id="closeModal" onclick="closeModal()" class="close">&times;</span>
+                    <h2>Editar Agendamento</h2>
+                    <input type="text" id="editTitle" placeholder="Título"><br><br>
+                    <input type="text" id="editDate" placeholder="DD/MM/AAAA HH:mm"><br><br>
+                    <textarea id="editDescription" placeholder="Descrição"></textarea><br><br>
+                    <button id="saveEditBtn" onClick="editSchedule()">Salvar</button>
+                </div>
+            </div>
         </div>
-    </div>
+    </main>
 
 </body>
 <script src="./javascript/requests.js"></script>
 <script src="./javascript/main.js"></script>
+<script src="./javascript/eventListeners.js"></script>
+<script src="./javascript/formatters.js"></script>
 
 </html>

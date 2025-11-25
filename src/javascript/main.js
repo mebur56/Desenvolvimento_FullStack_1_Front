@@ -1,36 +1,5 @@
-const dateInput = document.getElementById("dateInput");
-const dateInputModal = document.getElementById("editDate");
 
-dateInput.addEventListener("input", function (e) {
-    date = maskFormatDate(e.target.value);
-    e.target.value = date;
-});
-
-dateInputModal.addEventListener("input", function (e) {
-    date = maskFormatDate(e.target.value);
-    e.target.value = date;
-});
-
-function maskFormatDate(date) {
-    date = date.replace(/\D/g, "");
-
-    if (date.length > 2) {
-        date = date.replace(/(\d{2})(\d)/, "$1/$2");
-    }
-    if (date.length > 5) {
-        date = date.replace(/(\d{2})\/(\d{2})(\d)/, "$1/$2/$3");
-    }
-    if (date.length > 8) date = date.replace(/(\d{2}\/\d{2}\/\d{4})(\d{1,2})(\d{1,2})?/, "$1 $2:$3");
-
-    return date
-}
 loadSchedules()
-
-function formatDate(dateStr) {
-    const [datePart, timePart] = dateStr.split(" ");
-    const [year, month, day] = datePart.split("-");
-    return `${day}/${month}/${year} ${timePart}`;
-}
 
 function clearTable() {
     const table = document.getElementById("tabela_agenda");
@@ -38,7 +7,6 @@ function clearTable() {
         table.deleteRow(1);
     }
 }
-
 
 function loadSchedules() {
     clearTable()
@@ -57,20 +25,29 @@ function populateTable(schedule) {
     const cellDescription = newRow.insertCell(2);
     const cellActions = newRow.insertCell(3);
 
-
     cellTitle.textContent = schedule.title;
     cellDate.textContent = formatDate(schedule.date);;
     cellDescription.textContent = schedule.description;
 
+    const editIcon = document.createElement("img")
+    editIcon.src = "./svg/edit-icon.svg"
+    editIcon.classList.add("edit-icon");
+
     const editBtn = document.createElement("button");
     editBtn.id = `edit${schedule.id}`
     editBtn.textContent = "Editar";
+    editBtn.appendChild(editIcon)
     editBtn.classList.add("btn-edit");
     editBtn.onclick = () => openModal(schedule);
+
+    const deleteIcon = document.createElement("img")
+    deleteIcon.src = "./svg/delete-icon.svg"
+    deleteIcon.classList.add("delete-icon");
 
     const deleteBtn = document.createElement("button");
     deleteBtn.id = `delete${schedule.id}`
     deleteBtn.textContent = "Excluir";
+    deleteBtn.appendChild(deleteIcon)
     deleteBtn.classList.add("btn-delete");
     deleteBtn.onclick = () => deleteSchedule(schedule.id);
 
@@ -80,27 +57,31 @@ function populateTable(schedule) {
 
 
 async function addSchedule() {
-    const dateStr = document.getElementById("dateInput").value;
-    const [datePart, timePart] = dateStr.split(" ");
-    const [day, month, year] = datePart.split("/");
-    const formatted = `${year}-${month}-${day} ${timePart}`;
+    const dateInput = document.getElementById("dateInput");
+    const titleInput = document.getElementById("titleInput");
+    const descriptionInput = document.getElementById("descriptionInput");
 
+    const dateStr = dateInput.value
+    const formatted = formatDateToUniversal(dateStr);
 
     const schedule = {
-        title: document.getElementById("titleInput").value,
+        title: titleInput.value,
         date: formatted,
-        description: document.getElementById("descriptionInput").value
+        description: descriptionInput.value
     }
 
     success = await newSchedule(schedule)
-    if (success) {
+    if (success == true) {
+        titleInput.value = "";
+        dateInput.value = "";
+        descriptionInput.value = ""
         loadSchedules();
     }
 }
 
-function deleteSchedule(id) {
-    success = removeSchedule(id);
-    if (success) {
+async function deleteSchedule(id) {
+    success = await removeSchedule(id);
+    if (success == true) {
         loadSchedules()
     }
 }
@@ -125,9 +106,7 @@ function closeModal() {
 
 async function editSchedule() {
     const dateStr = document.getElementById("editDate").value;
-    const [datePart, timePart] = dateStr.split(" ");
-    const [day, month, year] = datePart.split("/");
-    const formatted = `${year}-${month}-${day} ${timePart}`;
+    const formatted = formatDateToUniversal(dateStr);
     title = document.getElementById("editTitle").value
     description = document.getElementById("editDescription").value
 
@@ -138,14 +117,9 @@ async function editSchedule() {
         description
     }
     success = await updateSchedule(schedule)
-    if (success) {
+    if (success == true) {
         loadSchedules()
     }
     closeModal()
 }
 
-window.onclick = (event) => {
-    if (event.target == editModal) {
-        closeModal()
-    }
-};

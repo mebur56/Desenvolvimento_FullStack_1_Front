@@ -23,10 +23,10 @@ function newSchedule(schedule) {
             },
             body: JSON.stringify(schedule)
         }).then(response => {
-            console.log(response)
-            if (response.status = 201) {
+            if (response.status == 201) {
                 return true
             }
+            return false
         })
     }
     catch (error) {
