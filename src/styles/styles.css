@@ -8,14 +8,13 @@ body {
 }
 
 .title {
-  margin-left: 50%
+  margin-left: 46%
 }
 
 .form {
   margin-bottom: 20px;
   display: flex;
   align-items: center;
-  margin-left: 1%;
   justify-content: center;
 }
 
@@ -88,6 +87,10 @@ td:nth-child(4) {
 }
 
 .add-icon {
+  width: 20px;
+  height: 20px;
+}
+.search-icon {
   width: 20px;
   height: 20px;
 }

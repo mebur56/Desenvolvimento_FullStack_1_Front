@@ -14,12 +14,11 @@
         <div class="main">
             <h1 class="title">Agenda</h1>
             <div class="form">
-                <input class="input" id="titleInput" type="text" placeholder="Título">
-                <input class="input" id="dateInput" type="text" placeholder="DD/MM/AAAA HH:mm" maxlength="16"
-                    pattern="\d{2}/\d{2}/\d{4}">
-                <input class="input" id="descriptionInput" type="text"
-                    placeholder="Descrição">
-                <button class="btn-add" onclick="addSchedule()">
+                <input class="input" id="searchInput" type="text" placeholder="Procurar...">
+                  <button class="btn-add" onclick="searchButton()">
+                    Procurar<img class="search-icon" src="./svg/search-icon.svg" alt="Procurar" />
+                </button>
+                <button class="btn-add" onclick="openAddmodal()">
                     Adicionar<img class="add-icon" src="./svg/add-icon.svg" alt="Adicionar" />
                 </button>
             </div>
@@ -33,12 +32,22 @@
                     </tr>
                 </table>
             </div>
+            <div id="addModal" class="modal">
+                <div class="modal-content">
+                    <span id="closeModal" onclick="closeModal()" class="close">&times;</span>
+                    <h2>Adicionar Agendamento</h2>
+                    <input type="text" id="addTitle" placeholder="Título"><br><br>
+                    <input type="text" id="addDate" placeholder="DD/MM/AAAA HH:mm" maxlength="16"><br><br>
+                    <textarea id="addDescription" placeholder="Descrição"></textarea><br><br>
+                    <button id="addBtn" onClick="addSchedule()">Adicionar</button>
+                </div>
+            </div>
             <div id="editModal" class="modal">
                 <div class="modal-content">
                     <span id="closeModal" onclick="closeModal()" class="close">&times;</span>
                     <h2>Editar Agendamento</h2>
                     <input type="text" id="editTitle" placeholder="Título"><br><br>
-                    <input type="text" id="editDate" placeholder="DD/MM/AAAA HH:mm"><br><br>
+                    <input type="text" id="editDate" placeholder="DD/MM/AAAA HH:mm" maxlength="16"><br><br>
                     <textarea id="editDescription" placeholder="Descrição"></textarea><br><br>
                     <button id="saveEditBtn" onClick="editSchedule()">Salvar</button>
                 </div>

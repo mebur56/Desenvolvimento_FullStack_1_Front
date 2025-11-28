@@ -38,7 +38,7 @@ function populateTable(schedule) {
     editBtn.textContent = "Editar";
     editBtn.appendChild(editIcon)
     editBtn.classList.add("btn-edit");
-    editBtn.onclick = () => openModal(schedule);
+    editBtn.onclick = () => openEditModal(schedule);
 
     const deleteIcon = document.createElement("img")
     deleteIcon.src = "./svg/delete-icon.svg"
@@ -56,20 +56,35 @@ function populateTable(schedule) {
 }
 
 
-async function addSchedule() {
-    const dateInput = document.getElementById("dateInput");
-    const titleInput = document.getElementById("titleInput");
-    const descriptionInput = document.getElementById("descriptionInput");
+async function searchButton(){
+    const searchInput = document.getElementById("searchInput").value
+    if(!searchInput){
+        loadSchedules();
+        return;
+    }
+    schedules = await searchSchedule(searchInput)
+    clearTable();
+    if (schedules.length>0) {
+        schedules.forEach(schedule =>{
+            populateTable(schedule);
+        });
+    }
+}
 
+async function addSchedule() {
+    const dateInput = document.getElementById("addDate");
+    const titleInput = document.getElementById("addTitle");
+    const descriptionInput = document.getElementById("addDescription");
+    
     const dateStr = dateInput.value
     const formatted = formatDateToUniversal(dateStr);
-
+    
     const schedule = {
         title: titleInput.value,
         date: formatted,
         description: descriptionInput.value
     }
-
+    
     success = await newSchedule(schedule)
     if (success == true) {
         titleInput.value = "";
@@ -77,6 +92,7 @@ async function addSchedule() {
         descriptionInput.value = ""
         loadSchedules();
     }
+    closeModal()
 }
 
 async function deleteSchedule(id) {
@@ -88,7 +104,7 @@ async function deleteSchedule(id) {
 
 let currentEditingId = null
 const editModal = document.getElementById("editModal");
-function openModal(schedule) {
+function openEditModal(schedule) {
     currentEditingId = schedule.id;
     document.getElementById("editTitle").value = schedule.title;
     document.getElementById("editDate").value = maskFormatDate(formatDate(schedule.date));
@@ -97,11 +113,20 @@ function openModal(schedule) {
     editModal.style.display = "block";
 }
 
+const addModal = document.getElementById("addModal");
+function openAddmodal() {
+    addModal.style.display = "block";
+}
+
 function closeModal() {
     document.getElementById("editTitle").value = "";
     document.getElementById("editDate").value = "";
     document.getElementById("editDescription").value = "";
+    document.getElementById("addTitle").value = "";
+    document.getElementById("addDate").value = "";
+    document.getElementById("addDescription").value = "";
     editModal.style.display = "none";
+    addModal.style.display= "none";
 };
 
 async function editSchedule() {
@@ -123,3 +148,8 @@ async function editSchedule() {
     closeModal()
 }
 
+window.onclick = (event) => {
+    if (event.target == editModal || event.target == addModal) {
+        closeModal()
+    }
+};

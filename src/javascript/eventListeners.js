@@ -1,4 +1,4 @@
-const dateInput = document.getElementById("dateInput");
+const dateInput = document.getElementById("addDate");
 const dateInputModal = document.getElementById("editDate");
 
 dateInput.addEventListener("input", function (e) {
@@ -11,8 +11,3 @@ dateInputModal.addEventListener("input", function (e) {
     e.target.value = date;
 });
 
-window.onclick = (event) => {
-    if (event.target == editModal) {
-        closeModal()
-    }
-};
