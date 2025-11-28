@@ -36,7 +36,7 @@ function newSchedule(schedule) {
 }
 
 function removeSchedule(id) {
-    const url = `${API_URL}/schedule/${id}`
+    const url = `${API_URL}/schedule?id=${id}`
     try {
         return fetch(url, {
             method: 'DELETE',
